@@ -46,7 +46,7 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -1;
+    z-index: 1;
 }
 
 .particle {
@@ -82,6 +82,7 @@ body {
     display: flex;
     position: relative;
     border: 1px solid var(--border);
+    z-index: 100;
 }
 
 .hidden {
@@ -94,7 +95,22 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+}
+
 @keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
     from { transform: translateX(-20px); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
 }
@@ -128,6 +144,41 @@ body {
     50% { transform: translateY(-10px); }
 }
 
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatUp {
+    from { transform: translateY(30px) scale(0.8); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.6); }
+}
+
+@keyframes expandLine {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+@keyframes drawLogo {
+    from { stroke-dasharray: 300; stroke-dashoffset: 300; }
+    to { stroke-dasharray: 300; stroke-dashoffset: 0; }
+}
+
+@keyframes fadeInCircle {
+    to { opacity: 1; }
+}
+
 /* Аутентификация */
 .auth-container {
     width: 100%;
@@ -138,6 +189,8 @@ body {
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border);
     animation: fadeIn 0.5s ease-out;
+    position: relative;
+    z-index: 10;
 }
 
 .auth-header {
@@ -176,15 +229,6 @@ body {
     fill: var(--primary);
     opacity: 0;
     animation: fadeInCircle 0.5s ease-out 1s forwards;
-}
-
-@keyframes drawLogo {
-    from { stroke-dasharray: 300; stroke-dashoffset: 300; }
-    to { stroke-dasharray: 300; stroke-dashoffset: 0; }
-}
-
-@keyframes fadeInCircle {
-    to { opacity: 1; }
 }
 
 .auth-logo-text {
@@ -305,11 +349,6 @@ body {
     animation: expandLine 0.3s ease-out;
 }
 
-@keyframes expandLine {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-}
-
 .auth-btn {
     position: relative;
     padding: 16px;
@@ -339,10 +378,6 @@ body {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.4);
     transform: scale(0);
-    animation: ripple 0.6s linear;
-}
-
-.auth-btn:focus .btn-ripple {
     animation: ripple 0.6s linear;
 }
 
@@ -474,7 +509,7 @@ body {
     border-radius: var(--radius);
     box-shadow: var(--shadow-lg);
     min-width: 200px;
-    z-index: 100;
+    z-index: 1000;
     overflow: hidden;
     border: 1px solid var(--border);
     animation: fadeIn 0.2s ease-out;
@@ -613,6 +648,12 @@ body {
     background: white;
     box-shadow: var(--shadow);
     border-left: 3px solid var(--primary);
+}
+
+.new-contact {
+    background: rgba(37, 99, 235, 0.05) !important;
+    border: 1px solid rgba(37, 99, 235, 0.2) !important;
+    animation: glow 2s infinite;
 }
 
 .avatar {
@@ -1047,6 +1088,167 @@ body {
     animation: ripple 0.6s linear;
 }
 
+/* Модальные окна - ИСПРАВЛЕННЫЕ */
+.profile-modal,
+.chat-info-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: var(--shadow-lg);
+    animation: scaleIn 0.3s ease-out;
+    position: relative;
+    z-index: 10000;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    color: var(--dark);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--gray);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    background: var(--light);
+    color: var(--error);
+}
+
+.modal-body {
+    animation: floatUp 0.3s ease-out;
+}
+
+.profile-avatar,
+.chat-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    animation: pulse 2s infinite;
+}
+
+.profile-info,
+.chat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.info-label {
+    color: var(--gray);
+    font-weight: 500;
+}
+
+.info-value {
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.status-online {
+    color: var(--success);
+}
+
+.status-offline {
+    color: var(--gray);
+}
+
+/* Пустые состояния и ошибки */
+.empty-state,
+.error-state {
+    text-align: center;
+    padding: 60px 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.empty-icon,
+.error-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+.empty-state h4,
+.error-state h4 {
+    font-size: 18px;
+    color: var(--dark);
+    margin-bottom: 8px;
+}
+
+.empty-state p,
+.error-state p {
+    color: var(--gray);
+    margin-bottom: 20px;
+}
+
+.empty-btn,
+.retry-btn {
+    padding: 10px 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.empty-btn:hover,
+.retry-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
 /* Статус */
 .status-dot {
     width: 8px;
@@ -1071,6 +1273,7 @@ body {
     height: 32px;
     animation: spin 0.8s linear infinite;
     margin: 40px auto;
+    position: relative;
 }
 
 .loader::after {
@@ -1149,4 +1352,56 @@ body {
 :focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
+}
+/* Глобальный фикс для всех выпадающих меню */
+.dropdown-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    min-width: 200px;
+    z-index: 9999 !important; /* Увеличиваем z-index до максимума */
+    overflow: hidden;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.user-menu {
+    position: relative;
+    z-index: 1001; /* Добавляем z-index */
+}
+/* Переопределяем скрытие */
+.dropdown-menu.hidden {
+    display: none !important;
+}
+
+/* Убираем возможные overflow проблемы */
+.sidebar,
+/* Исправление для хедера */
+.header {
+    padding: 24px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* Добавляем relative */
+    z-index: 1000; /* Добавляем z-index */
+}
+
+.search-container {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 100; /* Уменьшаем z-index для поиска */
+}
+
+.contacts-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    position: relative;
+    z-index: 90; /* Низкий z-index */
 }
