@@ -615,12 +615,7 @@ function closeMobileMenu() {
     document.getElementById('sidebarOverlay').classList.remove('active');
 }
 
-// Закрывать меню при клике на оверлей
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('sidebar-overlay')) {
-        closeMobileMenu();
-    }
-});
+onclick="closeMobileMenu()"
 
 // Закрывать меню при ресайзе
 window.addEventListener('resize', function() {
