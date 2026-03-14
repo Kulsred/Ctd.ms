@@ -470,6 +470,7 @@ function updateContactsList() {
     list.innerHTML = html;
 }
 
+// ===== ВЫБОР ЧАТА =====
 async function selectChat(id, otherId, type) {
     if (unsubscribeMessages) unsubscribeMessages();
     
@@ -603,10 +604,41 @@ function toggleDropdown() {
     dropdown.classList.toggle('hidden');
 }
 
+// ===== МОБИЛЬНОЕ МЕНЮ (ИСПРАВЛЕННОЕ) =====
 function toggleMobileMenu() {
-    document.getElementById('sidebar').classList.toggle('mobile-open');
-    document.getElementById('sidebarOverlay').classList.toggle('active');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if (!sidebar || !overlay) return;
+    
+    sidebar.classList.toggle('mobile-open');
+    overlay.classList.toggle('active');
+    
+    // Блокируем скролл body
+    if (sidebar.classList.contains('mobile-open')) {
+        document.body.style.overflow = 'hidden';
+        document.body.classList.add('menu-open');
+    } else {
+        document.body.style.overflow = '';
+        document.body.classList.remove('menu-open');
+    }
 }
+
+
+
+// Закрывать меню при клике на overlay
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('sidebar-overlay')) {
+        closeMobileMenu();
+    }
+});
+
+// Закрывать меню при ресайзе
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 768) {
+        closeMobileMenu();
+    }
+});
 
 function closeMobileMenu() {
     document.getElementById('sidebar').classList.remove('mobile-open');
@@ -954,21 +986,6 @@ document.getElementById('messageInput').addEventListener('keydown', function(e) 
     }
 });
 
-function showMessage(type, text) {
-    const div = document.createElement('div');
-    div.className = type === 'error' ? 'error-message' : 'success-message';
-    div.textContent = text;
-    
-    document.getElementById('authMessages').innerHTML = '';
-    document.getElementById('authMessages').appendChild(div);
-    
-    setTimeout(() => {
-        div.style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('authMessages').innerHTML = '';
-        }, 300);
-    }, 3000);
-}
 
 function showAuthTab(tab) {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));

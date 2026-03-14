@@ -1388,3 +1388,103 @@ body {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
+/* ===== ИСПРАВЛЕНИЕ ДЛЯ МОБИЛОК ===== */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        width: 85% !important;
+        max-width: 320px !important;
+        background: var(--surface);
+        z-index: 1001;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar.mobile-open {
+        left: 0 !important;
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        backdrop-filter: blur(3px);
+    }
+
+    .sidebar-overlay.active {
+        display: block !important;
+    }
+
+    /* Убедимся что контент меню кликабельный */
+    .sidebar * {
+        pointer-events: auto !important;
+    }
+
+    /* Сделаем меню поуже */
+    .sidebar .header {
+        padding: 15px;
+    }
+
+    .sidebar .tabs {
+        padding: 8px;
+    }
+
+    .sidebar .search-container {
+        padding: 10px;
+    }
+
+    .sidebar .contacts-list {
+        padding: 8px;
+        max-height: calc(100vh - 180px);
+    }
+
+    .sidebar .contact-item {
+        padding: 10px;
+    }
+
+    .sidebar .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    /* Кнопка меню */
+    .mobile-menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--text);
+        z-index: 1002;
+    }
+
+    /* Затемнение фона при открытом меню */
+    body.menu-open {
+        overflow: hidden;
+    }
+
+    /* Анимация для меню */
+    @keyframes slideIn {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(0); }
+    }
+
+    .sidebar.mobile-open {
+        animation: slideIn 0.3s ease forwards;
+    }
+}
