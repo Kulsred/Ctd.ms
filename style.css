@@ -1480,4 +1480,19 @@ body {
         font-size: 15px;
         min-height: 44px;
     }
+    
+
+@media (max-width: 768px) {
+
+body {
+    display: block;
+    padding: 0;
 }
+
+.container {
+    height: 100vh;
+    border-radius: 0;
+}
+
+}
+
