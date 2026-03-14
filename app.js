@@ -32,7 +32,7 @@ const giftsCatalog = [
 ];
 
 // ===== АДМИН ПАНЕЛЬ =====
-const admins = ['HJktDq8jhVVaQQLSPSjgZzD12Wj2']; // ТВОЙ UID
+const admins = ['M42iVvDOKwXLUcy33yWwVqF8qYm1'];
 
 function isAdmin() {
     return admins.includes(currentUser?.uid);
