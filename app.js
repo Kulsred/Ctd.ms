@@ -605,19 +605,37 @@ function toggleDropdown() {
 }
 
 // ===== МОБИЛЬНОЕ МЕНЮ =====
-function toggleMobileMenu() {
-    document.getElementById('sidebar').classList.toggle('mobile-open');
-    document.getElementById('sidebarOverlay').classList.toggle('active');
+
+function toggleMobileMenu(event) {
+    if (event) event.stopPropagation();
+
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    sidebar.classList.toggle('mobile-open');
+    overlay.classList.toggle('active');
 }
 
 function closeMobileMenu() {
-    document.getElementById('sidebar').classList.remove('mobile-open');
-    document.getElementById('sidebarOverlay').classList.remove('active');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
 }
 
+// закрытие только при клике на серый фон
+document.getElementById('sidebarOverlay').addEventListener('click', function () {
+    closeMobileMenu();
+});
 
-// Закрывать меню при ресайзе
-window.addEventListener('resize', function() {
+// запрет закрытия при клике внутри меню
+document.getElementById('sidebar').addEventListener('click', function (e) {
+    e.stopPropagation();
+});
+
+// закрывать меню если экран стал большим
+window.addEventListener('resize', function () {
     if (window.innerWidth > 768) {
         closeMobileMenu();
     }
