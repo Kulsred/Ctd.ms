@@ -18,6 +18,8 @@
         <div class="particle particle-4"></div>
         <div class="particle particle-5"></div>
         <div class="particle particle-6"></div>
+        <!-- Оверлей для мобильного меню -->
+<div id="sidebarOverlay" class="sidebar-overlay" onclick="closeMobileMenu()"></div>
     </div>
     
     <div id="authContainer" class="auth-container">
@@ -178,12 +180,13 @@
         <div class="chat-area" id="chatArea">
             <div class="chat-header">
                 <div class="chat-user">
-                    <div class="avatar pulse" id="currentChatAvatar">?</div>
-                    <div class="user-details">
-                        <h3 id="currentChatName">Выберите чат</h3>
-                        <p id="currentChatStatus"></p>
-                    </div>
-                </div>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    <div class="avatar" id="currentChatAvatar">?</div>
+    <div class="user-details">
+        <h3 id="currentChatName">Выберите чат</h3>
+        <p id="currentChatStatus"></p>
+    </div>
+</div>
                 <div class="chat-actions">
                     <button class="action-btn floating" onclick="showChatInfo()">
                         <svg viewBox="0 0 24 24">
