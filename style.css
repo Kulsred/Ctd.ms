@@ -1815,3 +1815,219 @@ body.dark-theme .contact-name,
 body.dark-theme .user-details h3 {
     color: white;
 }
+.tabs-container {
+    display: flex;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--light);
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    color: var(--gray);
+}
+
+.tab svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.tab.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.tab:hover {
+    color: var(--dark);
+}
+
+.private-badge {
+    font-size: 12px;
+    color: var(--gray);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn.primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn.primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: var(--gray);
+    border: 1px solid var(--border);
+}
+
+.btn.secondary:hover {
+    background: var(--light);
+    color: var(--dark);
+}
+
+.message-sender {
+    font-size: 12px;
+    color: var(--primary);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+body.dark-theme .tab.active {
+    background: #334155;
+    color: var(--primary-light);
+}
+
+body.dark-theme .modal-content {
+    background: #1e293b;
+    color: white;
+}
+
+body.dark-theme .btn.secondary {
+    border-color: #475569;
+    color: var(--gray);
+}
+
+body.dark-theme .btn.secondary:hover {
+    background: #334155;
+    color: white;
+}
+body.dark-theme {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+body.dark-theme .container {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-theme .sidebar {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+body.dark-theme .header {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-theme .logo-text,
+body.dark-theme .contact-name,
+body.dark-theme .user-details h3 {
+    color: white;
+}
+
+body.dark-theme .contact-item:hover {
+    background: #334155;
+}
+
+body.dark-theme .contact-item.active {
+    background: #334155;
+}
+
+body.dark-theme .chat-area {
+    background: #0f172a;
+}
+
+body.dark-theme .chat-header {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-theme .message-input-area {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-theme .message-input {
+    color: white;
+}
+
+body.dark-theme .incoming .message-content {
+    background: #334155;
+    color: white;
+}
+
+body.dark-theme .modal-content {
+    background: #1e293b;
+    color: white;
+}
+
+body.dark-theme .modal-header {
+    border-color: #334155;
+}
+
+body.dark-theme .btn.secondary {
+    border-color: #475569;
+    color: #94a3b8;
+}
+
+body.dark-theme .btn.secondary:hover {
+    background: #334155;
+    color: white;
+}
+
+body.dark-theme .auth-container {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-theme .auth-logo-text,
+body.dark-theme .auth-tab.active {
+    color: white;
+}
+
+body.dark-theme .form-control {
+    color: white;
+    border-bottom-color: #334155;
+}
+
+body.dark-theme .floating-label label {
+    color: #94a3b8;
+}
