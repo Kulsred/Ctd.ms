@@ -2035,38 +2035,45 @@ body.dark-theme .floating-label label {
 @media (max-width: 768px) {
     body {
         padding: 0;
+        margin: 0;
+        background: var(--bg);
         overflow: hidden;
     }
 
+    /* Контейнер на весь экран */
     .container {
         width: 100%;
         height: 100vh;
-        border-radius: 0;
         max-width: 100%;
+        border-radius: 0;
         position: fixed;
         top: 0;
         left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--surface);
     }
 
-    /* Боковая панель на мобилках */
+    /* Боковая панель */
     .sidebar {
-        width: 85%;
-        max-width: 300px;
-        position: absolute;
-        left: 0;
+        position: fixed;
+        left: -100%;
         top: 0;
         bottom: 0;
-        z-index: 1000;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        width: 85%;
+        max-width: 320px;
+        background: var(--surface);
+        z-index: 1001;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        border-right: 1px solid var(--border);
     }
 
     .sidebar.mobile-open {
-        transform: translateX(0);
+        left: 0;
     }
 
-    /* Затемнение фона при открытом меню */
+    /* Оверлей */
     .sidebar-overlay {
         display: none;
         position: fixed;
@@ -2075,16 +2082,21 @@ body.dark-theme .floating-label label {
         right: 0;
         bottom: 0;
         background: rgba(0,0,0,0.5);
-        z-index: 999;
+        z-index: 1000;
     }
 
     .sidebar-overlay.active {
         display: block;
     }
 
-    /* Шапка чата на мобилках */
+    /* Шапка чата */
     .chat-header {
-        padding: 12px 15px;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
     }
 
     .mobile-menu-btn {
@@ -2098,66 +2110,84 @@ body.dark-theme .floating-label label {
         font-size: 24px;
         color: var(--text);
         cursor: pointer;
-        margin-right: 10px;
+        padding: 0;
     }
 
     .chat-user {
         flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         min-width: 0;
     }
 
     .user-details {
-        overflow: hidden;
+        flex: 1;
+        min-width: 0;
     }
 
     .user-details h3 {
-        font-size: 14px;
+        font-size: 15px;
+        margin-bottom: 2px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .user-details p {
-        font-size: 11px;
+        font-size: 12px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .chat-actions {
+        display: flex;
         gap: 5px;
     }
 
     .action-btn {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
     }
 
-    /* Сообщения на мобилках */
+    /* Область сообщений */
     .messages-container {
-        padding: 12px;
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px;
+        background: var(--bg);
+        height: calc(100vh - 130px);
     }
 
     .message {
         max-width: 85%;
+        margin-bottom: 12px;
     }
 
     .message-content {
-        padding: 10px 14px;
+        padding: 12px 16px;
         font-size: 14px;
+        line-height: 1.4;
     }
 
     .message-time {
         font-size: 10px;
-        margin-top: 2px;
+        margin-top: 4px;
     }
 
-    /* Поле ввода на мобилках */
+    /* Поле ввода */
     .message-input-area {
         padding: 10px 15px;
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+        position: sticky;
+        bottom: 0;
     }
 
     .input-container {
+        display: flex;
+        align-items: center;
         gap: 8px;
     }
 
@@ -2167,26 +2197,44 @@ body.dark-theme .floating-label label {
         flex-shrink: 0;
     }
 
+    .input-wrapper {
+        flex: 1;
+    }
+
     .message-input {
+        width: 100%;
+        padding: 10px 0;
         font-size: 14px;
-        padding: 8px 0;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--border);
+        color: var(--text);
+    }
+
+    .message-input:focus {
+        outline: none;
+        border-bottom-color: var(--primary);
     }
 
     /* Модалки на мобилках */
     .modal-content {
         width: 95%;
         max-width: none;
-        margin: 10px;
-        max-height: 90vh;
+        margin: 20px auto;
+        max-height: 85vh;
+        overflow-y: auto;
     }
 
     .modal-body {
         padding: 15px;
     }
 
+    /* Сетка подарков */
     .gift-grid {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
+        margin-top: 15px;
     }
 
     .gift-item {
@@ -2198,7 +2246,12 @@ body.dark-theme .floating-label label {
         height: 50px;
     }
 
-    /* Список контактов на мобилках */
+    /* Список контактов */
+    .contacts-list {
+        height: calc(100vh - 180px);
+        overflow-y: auto;
+    }
+
     .contact-item {
         padding: 12px;
     }
@@ -2221,42 +2274,48 @@ body.dark-theme .floating-label label {
         font-size: 10px;
     }
 
-    /* Табы на мобилках */
+    /* Табы */
     .tabs {
         padding: 8px;
+        display: flex;
+        gap: 8px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
     }
 
     .tab {
-        padding: 8px;
+        flex: 1;
+        padding: 10px;
         font-size: 13px;
+        text-align: center;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--text-secondary);
     }
 
-    .tab i {
-        font-size: 16px;
+    .tab.active {
+        background: var(--bg);
+        color: var(--primary);
     }
 
-    /* Поиск на мобилках */
+    /* Поиск */
     .search-container {
         padding: 12px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
     }
 
     .search-container input {
-        padding: 10px 12px;
-        font-size: 14px;
-    }
-
-    /* Админ панель на мобилках */
-    .admin-search-result {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .admin-search-result button {
         width: 100%;
+        padding: 12px;
+        font-size: 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--text);
     }
 
-    /* Профиль на мобилках */
+    /* Профиль */
     .profile-avatar {
         width: 70px;
         height: 70px;
@@ -2266,6 +2325,44 @@ body.dark-theme .floating-label label {
     .info-item {
         font-size: 13px;
         padding: 8px 0;
+    }
+
+    /* Админ панель */
+    .admin-search-result {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .admin-search-result button {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* Пустые состояния */
+    .empty-state {
+        padding: 30px 20px;
+    }
+
+    .empty-icon {
+        font-size: 48px;
+    }
+
+    .empty-state h4 {
+        font-size: 16px;
+    }
+
+    .empty-state p {
+        font-size: 13px;
+    }
+
+    .empty-btn {
+        padding: 12px 24px;
+        font-size: 14px;
     }
 }
 
@@ -2280,17 +2377,18 @@ body.dark-theme .floating-label label {
     }
 
     .chat-actions {
-        display: none; /* Прячем действия на очень маленьких */
-    }
-
-    .action-btn {
-        width: 32px;
-        height: 32px;
+        display: none; /* Прячем на очень маленьких */
     }
 
     .attach-btn, .send-btn {
         width: 40px;
         height: 40px;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
 }
 
