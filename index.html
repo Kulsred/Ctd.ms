@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Чтд.мс | свободный мессенджер</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
+    <!-- Частицы фона -->
     <div class="particles-container">
         <div class="particle particle-1"></div>
         <div class="particle particle-2"></div>
@@ -18,10 +19,9 @@
         <div class="particle particle-4"></div>
         <div class="particle particle-5"></div>
         <div class="particle particle-6"></div>
-        <!-- Оверлей для мобильного меню -->
-<div id="sidebarOverlay" class="sidebar-overlay" onclick="closeMobileMenu()"></div>
     </div>
     
+    <!-- Аутентификация -->
     <div id="authContainer" class="auth-container">
         <div class="auth-header">
             <div class="auth-logo">
@@ -69,12 +69,12 @@
         <form id="registerForm" class="auth-form hidden">
             <div class="form-group floating-label">
                 <input type="text" id="registerName" class="form-control" placeholder=" " required>
-                <label for="registerName">Имя пользователя</label>
+                <label for="registerName">Отображаемое имя</label>
                 <div class="form-line"></div>
             </div>
             <div class="form-group floating-label">
                 <input type="text" id="registerUsername" class="form-control" placeholder=" " required>
-                <label for="registerUsername">@username</label>
+                <label for="registerUsername">Имя пользователя</label>
                 <div class="form-line"></div>
             </div>
             <div class="form-group floating-label">
@@ -94,8 +94,10 @@
         </form>
     </div>
     
+    <!-- Основной интерфейс -->
     <div id="appContainer" class="container hidden">
-        <div class="sidebar">
+        <!-- Боковая панель -->
+        <div class="sidebar" id="sidebar">
             <div class="header">
                 <div class="logo">
                     <div class="logo-icon">
@@ -108,40 +110,7 @@
                 </div>
                 <div class="user-menu">
                     <div class="user-avatar pulse" id="userAvatar" onclick="toggleDropdown()">U</div>
-                    <div id="dropdownMenu" class="dropdown-menu hidden">
-                        <div class="dropdown-item" onclick="showProfile()">
-                            <div class="dropdown-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
-                                </svg>
-                            </div>
-                            <span>Мой профиль</span>
-                        </div>
-                        <div class="dropdown-item" onclick="showNewChat()">
-                            <div class="dropdown-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
-                                </svg>
-                            </div>
-                            <span>Новый чат</span>
-                        </div>
-                        <div class="dropdown-item" onclick="showCreateChannel()">
-                            <div class="dropdown-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,20C7.58,20 4,16.42 4,12C4,7.58 7.58,4 12,4C16.42,4 20,7.58 20,12C20,16.42 16.42,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                                </svg>
-                            </div>
-                            <span>Создать канал</span>
-                        </div>
-                        <div class="dropdown-item" onclick="logout()">
-                            <div class="dropdown-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z"/>
-                                </svg>
-                            </div>
-                            <span>Выйти</span>
-                        </div>
-                    </div>
+                    <div id="dropdownMenu" class="dropdown-menu hidden"></div>
                 </div>
             </div>
             
@@ -177,18 +146,19 @@
             </div>
         </div>
         
-        <div class="chat-area" id="chatArea">
+        <!-- Область чата -->
+        <div class="chat-area">
             <div class="chat-header">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
                 <div class="chat-user">
-    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-    <div class="avatar" id="currentChatAvatar">?</div>
-    <div class="user-details">
-        <h3 id="currentChatName">Выберите чат</h3>
-        <p id="currentChatStatus"></p>
-    </div>
-</div>
+                    <div class="avatar pulse" id="currentChatAvatar">?</div>
+                    <div class="user-details">
+                        <h3 id="currentChatName">Выберите чат</h3>
+                        <p id="currentChatStatus"></p>
+                    </div>
+                </div>
                 <div class="chat-actions">
-                    <button class="action-btn floating" onclick="showChatInfo()">
+                    <button class="action-btn" onclick="showChatInfo()">
                         <svg viewBox="0 0 24 24">
                             <path d="M13.5,4A1.5,1.5 0 0,0 12,5.5A1.5,1.5 0 0,0 13.5,7A1.5,1.5 0 0,0 15,5.5A1.5,1.5 0 0,0 13.5,4M13.14,8.77C11.95,8.87 8.7,11.46 8.7,11.46C8.5,11.61 8.56,11.6 8.72,11.88C8.88,12.15 8.86,12.17 9.05,12.04C9.25,11.91 9.58,11.7 10.13,11.36C12.25,10 10.47,13.14 9.56,18.43C9.2,21.05 11.56,19.7 12.17,19.3C12.77,18.91 14.38,17.8 14.54,17.69C14.76,17.54 14.6,17.42 14.43,17.17C14.31,17 14.19,17.12 14.19,17.12C13.54,17.55 12.35,18.45 12.19,17.88C12,17.31 13.22,13.4 13.89,10.71C14,10.07 14.3,8.67 13.14,8.77Z"/>
                         </svg>
@@ -210,7 +180,7 @@
             
             <div class="message-input-area">
                 <div class="input-container">
-                    <button class="attachment-btn floating" onclick="attachFile()">
+                    <button class="attachment-btn" onclick="attachFile()" disabled>
                         <svg viewBox="0 0 24 24">
                             <path d="M16.5,6V17.5A4,4 0 0,1 12.5,21.5A4,4 0 0,1 8.5,17.5V5A2.5,2.5 0 0,1 11,2.5A2.5,2.5 0 0,1 13.5,5V15.5A1,1 0 0,1 12.5,16.5A1,1 0 0,1 11.5,15.5V6H10V15.5A2.5,2.5 0 0,0 12.5,18A2.5,2.5 0 0,0 15,15.5V5A4,4 0 0,0 11,1A4,4 0 0,0 7,5V17.5A5.5,5.5 0 0,0 12.5,23A5.5,5.5 0 0,0 18,17.5V6H16.5Z"/>
                         </svg>
@@ -219,7 +189,7 @@
                         <textarea id="messageInput" class="message-input" placeholder="Напишите сообщение..." rows="1" disabled></textarea>
                         <div class="input-line"></div>
                     </div>
-                    <button id="sendButton" class="send-btn floating" onclick="sendMessage()" disabled>
+                    <button id="sendButton" class="send-btn" onclick="sendMessage()" disabled>
                         <svg class="send-icon" viewBox="0 0 24 24">
                             <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
                         </svg>
@@ -229,6 +199,10 @@
         </div>
     </div>
 
+    <!-- Оверлей для мобильного меню -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeMobileMenu()"></div>
+
+    <!-- Модальное окно создания канала -->
     <div id="createChannelModal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
@@ -246,13 +220,6 @@
                     <label for="channelUsername">Ссылка (@username)</label>
                     <div class="form-line"></div>
                 </div>
-                <div class="form-group">
-                    <label>Тип канала</label>
-                    <select id="channelType" class="form-control">
-                        <option value="public">Публичный (доступен всем)</option>
-                        <option value="private">Личный (по приглашениям)</option>
-                    </select>
-                </div>
                 <div class="form-group floating-label">
                     <textarea id="channelDescription" class="form-control" placeholder=" " rows="3"></textarea>
                     <label for="channelDescription">Описание</label>
@@ -266,6 +233,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно подписки на канал -->
     <div id="subscribeChannelModal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
