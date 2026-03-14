@@ -37,7 +37,22 @@ const admins = ['M42iVvDOKwXLUcy33yWwVqF8qYm1'];
 function isAdmin() {
     return admins.includes(currentUser?.uid);
 }
+// ===== МОБИЛЬНОЕ МЕНЮ =====
+function toggleMobileMenu() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    sidebar.classList.toggle('mobile-open');
+    overlay.classList.toggle('active');
+}
 
+function closeMobileMenu() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+}
 // ===== ВЫДАЧА ПОДАРКОВ АДМИНОМ =====
 async function giveGiftToUser(userId, giftId, amount = 1) {
     if (!isAdmin()) {
@@ -635,6 +650,8 @@ async function selectChat(id, otherId, type) {
     
     if (type === 'chat') {
         await markMessagesAsRead(id);
+    if (window.innerWidth <= 768) {
+        closeMobileMenu();
     }
 }
 
