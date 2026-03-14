@@ -28,7 +28,7 @@ const giftsCatalog = [
     { id: 'crown', name: 'Кубок', price: 200, icon: 'fa-solid fa-crown', image: 'https://showtg.ru/images/gifts/5168043875654172773.png' },
     { id: 'rocket', name: 'Ракета', price: 150, icon: 'fa-solid fa-rocket', image: 'https://showtg.ru/images/gifts/5170564780938756245.png' }
 ];
-const admins = ['HJktDq8jhVVaQQLSPSjgZzD12Wj2'];
+const admins = ['M42iVvDOKwXLUcy33yWwVqF8qYm1'];
 
 function isAdmin() {
     return admins.includes(currentUser?.uid);
@@ -604,29 +604,18 @@ function toggleDropdown() {
     dropdown.classList.toggle('hidden');
 }
 
-// ===== МОБИЛЬНОЕ МЕНЮ (ИСПРАВЛЕННОЕ) =====
+// ===== МОБИЛЬНОЕ МЕНЮ =====
 function toggleMobileMenu() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    
-    if (!sidebar || !overlay) return;
-    
-    sidebar.classList.toggle('mobile-open');
-    overlay.classList.toggle('active');
-    
-    // Блокируем скролл body
-    if (sidebar.classList.contains('mobile-open')) {
-        document.body.style.overflow = 'hidden';
-        document.body.classList.add('menu-open');
-    } else {
-        document.body.style.overflow = '';
-        document.body.classList.remove('menu-open');
-    }
+    document.getElementById('sidebar').classList.toggle('mobile-open');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
+function closeMobileMenu() {
+    document.getElementById('sidebar').classList.remove('mobile-open');
+    document.getElementById('sidebarOverlay').classList.remove('active');
+}
 
-
-// Закрывать меню при клике на overlay
+// Закрывать меню при клике на оверлей
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('sidebar-overlay')) {
         closeMobileMenu();
@@ -639,11 +628,6 @@ window.addEventListener('resize', function() {
         closeMobileMenu();
     }
 });
-
-function closeMobileMenu() {
-    document.getElementById('sidebar').classList.remove('mobile-open');
-    document.getElementById('sidebarOverlay').classList.remove('active');
-}
 
 async function logout() {
     try {
@@ -776,6 +760,7 @@ async function createNewChatFromModal() {
         input.disabled = false;
     }
 }
+
 async function createNewChat(username) {
     try {
         const user = await db.collection('users').where('username','==',username).get();
@@ -893,6 +878,7 @@ async function subscribeToChannel() {
         alert('Ошибка подписки');
     }
 }
+
 // ===== ПРОФИЛЬ (КРАСИВАЯ МОДАЛКА) =====
 function showProfile() {
     const user = users[currentUser.uid];
@@ -986,6 +972,21 @@ document.getElementById('messageInput').addEventListener('keydown', function(e) 
     }
 });
 
+function showMessage(type, text) {
+    const div = document.createElement('div');
+    div.className = type === 'error' ? 'error-message' : 'success-message';
+    div.textContent = text;
+    
+    document.getElementById('authMessages').innerHTML = '';
+    document.getElementById('authMessages').appendChild(div);
+    
+    setTimeout(() => {
+        div.style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('authMessages').innerHTML = '';
+        }, 300);
+    }, 3000);
+}
 
 function showAuthTab(tab) {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
