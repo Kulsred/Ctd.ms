@@ -1388,27 +1388,30 @@ body {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
-/* ===== ИСПРАВЛЕНИЕ ДЛЯ МОБИЛОК ===== */
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ ПОЛНЫЙ ФИКС ===== */
 @media (max-width: 768px) {
+    /* Убираем размытие */
     .sidebar {
         position: fixed;
         left: -100%;
         top: 0;
         bottom: 0;
-        width: 85% !important;
-        max-width: 320px !important;
-        background: var(--surface);
+        width: 280px !important;
+        background: white;
         z-index: 1001;
         transition: left 0.3s ease;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.3);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
     }
 
     .sidebar.mobile-open {
         left: 0 !important;
     }
 
+    /* Затемнение */
     .sidebar-overlay {
         display: none;
         position: fixed;
@@ -1416,46 +1419,19 @@ body {
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0,0,0,0.5);
         z-index: 1000;
-        backdrop-filter: blur(3px);
     }
 
     .sidebar-overlay.active {
         display: block !important;
     }
 
-    /* Убедимся что контент меню кликабельный */
+    /* Контент сайдбара должен быть видимым */
     .sidebar * {
         pointer-events: auto !important;
-    }
-
-    /* Сделаем меню поуже */
-    .sidebar .header {
-        padding: 15px;
-    }
-
-    .sidebar .tabs {
-        padding: 8px;
-    }
-
-    .sidebar .search-container {
-        padding: 10px;
-    }
-
-    .sidebar .contacts-list {
-        padding: 8px;
-        max-height: calc(100vh - 180px);
-    }
-
-    .sidebar .contact-item {
-        padding: 10px;
-    }
-
-    .sidebar .avatar {
-        width: 36px;
-        height: 36px;
-        font-size: 14px;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     /* Кнопка меню */
@@ -1463,28 +1439,206 @@ body {
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: transparent;
+        width: 44px;
+        height: 44px;
+        background: var(--primary);
+        color: white;
         border: none;
+        border-radius: 8px;
         font-size: 24px;
         cursor: pointer;
-        color: var(--text);
-        z-index: 1002;
+        margin-right: 10px;
+        flex-shrink: 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        z-index: 100;
     }
 
-    /* Затемнение фона при открытом меню */
-    body.menu-open {
+    .mobile-menu-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Шапка чата */
+    .chat-header {
+        display: flex;
+        align-items: center;
+        padding: 10px 12px;
+        background: white;
+        border-bottom: 1px solid #eee;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .chat-user {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .chat-user .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    .user-details {
+        min-width: 0;
+    }
+
+    .user-details h3 {
+        font-size: 15px;
+        white-space: nowrap;
         overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    /* Анимация для меню */
-    @keyframes slideIn {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(0); }
+    .user-details p {
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    .sidebar.mobile-open {
-        animation: slideIn 0.3s ease forwards;
+    .chat-actions {
+        display: flex;
+        gap: 5px;
+        flex-shrink: 0;
+    }
+
+    .action-btn {
+        width: 40px;
+        height: 40px;
+        background: #f0f0f0;
+        border: none;
+        border-radius: 8px;
+        color: #333;
+    }
+
+    /* Область сообщений */
+    .messages-container {
+        padding: 12px;
+        height: calc(100vh - 130px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .message {
+        max-width: 85%;
+    }
+
+    .message-content {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    /* Поле ввода - ВАЖНО */
+    .message-input-area {
+        padding: 10px 12px;
+        background: white;
+        border-top: 1px solid #eee;
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
+    }
+
+    .input-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .input-wrapper {
+        flex: 1;
+    }
+
+    .message-input {
+        width: 100%;
+        padding: 12px 0;
+        font-size: 15px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        background: transparent;
+    }
+
+    .attach-btn, .send-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .send-btn {
+        background: var(--primary);
+        color: white;
+    }
+
+    .attach-btn {
+        background: #f0f0f0;
+        color: #666;
+    }
+
+    /* Контакты */
+    .contacts-list {
+        height: calc(100vh - 180px);
+        overflow-y: auto;
+        padding: 10px;
+    }
+
+    .contact-item {
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 5px;
+        background: white;
+    }
+
+    .avatar {
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+    }
+
+    /* Модалки на мобилках */
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 10px;
+        max-height: 85vh;
+    }
+
+    /* Сетка подарков */
+    .gift-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .gift-item {
+        padding: 10px;
+    }
+
+    .gift-item img {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Профиль */
+    .profile-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+    }
+
+    /* Кнопки должны быть видны */
+    .empty-btn, .btn {
+        padding: 12px 20px;
+        font-size: 15px;
+        min-height: 44px;
     }
 }
