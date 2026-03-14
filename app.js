@@ -615,7 +615,6 @@ function closeMobileMenu() {
     document.getElementById('sidebarOverlay').classList.remove('active');
 }
 
-onclick="closeMobileMenu()"
 
 // Закрывать меню при ресайзе
 window.addEventListener('resize', function() {
